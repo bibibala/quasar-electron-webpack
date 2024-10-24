@@ -51,7 +51,7 @@ module.exports = configure((ctx) => {
                     cfg.optimization.minimizer = [
                         new TerserPlugin(),
                         new CssMinimizerPlugin(),
-                    ]
+                    ];
                 }
             },
         },
@@ -91,11 +91,58 @@ module.exports = configure((ctx) => {
                 },
             },
         },
-        electron:{
-            bundler:'builder',
-            builder:{
-                appid:'dddd'
-            }
-        }
+        electron: {
+            bundler: "builder",
+            builder: {
+                $schema:
+                    "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
+                asar: true,
+                productName: "${productName}",
+                copyright:
+                    "Copyright © 2024 Zhengzhou bingce Technology Co., Ltd.",
+                mac: {
+                    target: "dmg",
+                    extendInfo: {
+                        CFBundleName: "${productName}",
+                        CFBundleDisplayName: "${productName}",
+                    },
+                    icon: "src-electron/icons/icon.icns",
+                    artifactName:
+                        "${productName}-Mac-${version}-${arch}.${ext}",
+                },
+                dmg: {
+                    icon: "src-electron/icons/icon.icns",
+                    window: {
+                        width: 540,
+                        height: 380,
+                    },
+                    contents: [
+                        {
+                            x: 130,
+                            y: 220,
+                        },
+                        {
+                            x: 410,
+                            y: 220,
+                            type: "link",
+                            path: "/Applications",
+                        },
+                    ],
+                },
+                win: {
+                    target: "nsis",
+                    icon: "src-electron/icons/icon.ico",
+                    artifactName:
+                        "${productName}-Windows-${version}-${arch}-Setup.${ext}",
+                },
+                nsis: {
+                    oneClick: false,
+                    perMachine: false,
+                    shortcutName: "${productName}",
+                    allowToChangeInstallationDirectory: true,
+                    deleteAppDataOnUninstall: true,
+                },
+            },
+        },
     };
 });

@@ -4,7 +4,7 @@
             <ToolBar />
         </q-header>
         <q-drawer
-            :width="265"
+            :width="245"
             show-if-above
             v-model="drawer"
             side="left"
