@@ -34,6 +34,9 @@ function createWindow() {
             ),
         },
     });
+
+    app.commandLine.appendSwitch("lang", "zh-CN");
+
     /**
      *
      * @description 设置菜单
@@ -49,6 +52,11 @@ function createWindow() {
     const menu = Menu.buildFromTemplate(template);
     Menu.setApplicationMenu(menu);
 
+    /**
+     *
+     * @description 去啊u就那句注册快捷键
+     *
+     */
     globalShortcut.register("CommandOrControl+I", () => {
         mainWindow.webContents.openDevTools();
     });

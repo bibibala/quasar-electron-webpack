@@ -17,6 +17,9 @@ importers:
       '@quasar/extras':
         specifier: ^1.16.12
         version: 1.16.12
+      '@vercel/webpack-asset-relocator-loader':
+        specifier: ^1.7.4
+        version: 1.7.4
       axios:
         specifier: ^1.7.7
         version: 1.7.7
@@ -44,6 +47,9 @@ importers:
       eslint-webpack-plugin:
         specifier: ^3.2.0
         version: 3.2.0(eslint@8.57.1)(webpack@5.94.0)
+      node-loader:
+        specifier: ^2.0.0
+        version: 2.0.0(webpack@5.94.0)
       pinia:
         specifier: ^2.2.2
         version: 2.2.2(typescript@4.9.4)(vue@3.5.7(typescript@4.9.4))
@@ -1062,6 +1068,9 @@ packages:
 
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
+
+  '@vercel/webpack-asset-relocator-loader@1.7.4':
+    resolution: {integrity: sha512-RFFite6v51Qhj/eERru3qwUNCLybnceSChI5yiu9bhLpTemWbKPORAOExOgpO2W7IE/0UEh3aX6wTSHgDE/fdQ==}
 
   '@vue/compiler-core@3.5.7':
     resolution: {integrity: sha512-A0gay3lK71MddsSnGlBxRPOugIVdACze9L/rCo5X5srCyjQfZOfYtSFMJc3aOZCM+xN55EQpb4R97rYn/iEbSw==}
@@ -6361,6 +6370,10 @@ snapshots:
     optional: true
 
   '@ungap/structured-clone@1.2.0': {}
+
+  '@vercel/webpack-asset-relocator-loader@1.7.4':
+    dependencies:
+      resolve: 1.22.8
 
   '@vue/compiler-core@3.5.7':
     dependencies:
