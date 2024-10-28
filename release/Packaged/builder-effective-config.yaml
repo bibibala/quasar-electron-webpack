@@ -1,0 +1,65 @@
+directories:
+  output: /Users/nightwish/project/AdjustmentPc/release/Packaged
+  buildResources: /Users/nightwish/project/AdjustmentPc/src-electron
+  app: /Users/nightwish/project/AdjustmentPc/release/UnPackaged
+appId: com.bingce
+icon: /Users/nightwish/project/AdjustmentPc/src-electron/icons/icon
+productName: 测量员平差
+$schema: https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json
+asar: true
+afterPack: afterPack.js
+copyright: Copyright © 2024 Zhengzhou bingce Technology Co., Ltd.
+asarUnpack:
+  - resources/dll/*.dll
+extraResources:
+  - from: resources/dll/
+    to: dll/
+    filter:
+      - '**/*'
+files:
+  - filter:
+      - '**/*'
+      - '!**/.npmrc'
+      - '!**/vendor.js.LICENSE'
+      - '!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}'
+      - '!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}'
+      - '!**/node_modules/*.d.ts'
+      - '!**/node_modules/.bin'
+      - '!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}'
+      - '!.editorconfig'
+      - '!**/._*'
+      - '!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS,.gitignore,.gitattributes}'
+      - '!**/{__pycache__,thumbs.db,.flowconfig,.idea,.vs,.nyc_output}'
+      - '!**/{appveyor.yml,.travis.yml,circle.yml}'
+      - '!**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}'
+      - '!**/node_modules/*/{.git,.npm,.DS_Store,LICENSE,license,License}'
+mac:
+  target: dmg
+  extendInfo:
+    CFBundleName: 测量员平差
+    CFBundleDisplayName: 测量员平差
+  icon: src-electron/icons/icon.icns
+  artifactName: ${productName}-Mac-${version}-${arch}.${ext}
+dmg:
+  icon: src-electron/icons/icon.icns
+  window:
+    width: 540
+    height: 380
+  contents:
+    - x: 130
+      'y': 220
+    - x: 410
+      'y': 220
+      type: link
+      path: /Applications
+win:
+  target: nsis
+  icon: src-electron/icons/icon.ico
+  artifactName: ${productName}-Windows-${version}-${arch}-Setup.${ext}
+nsis:
+  oneClick: false
+  perMachine: false
+  shortcutName: 测量员平差
+  allowToChangeInstallationDirectory: true
+  deleteAppDataOnUninstall: true
+electronVersion: 33.0.1

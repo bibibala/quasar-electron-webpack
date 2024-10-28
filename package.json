@@ -12,7 +12,10 @@
         "lint": "eslint --ext .js,.vue ./",
         "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
         "dev": "quasar dev --mode electron",
-        "build": "quasar build --mode electron"
+        "build:winx64": "quasar build --mode electron --win --x64",
+        "build:winia32": "quasar build --mode electron --win --ia32",
+        "build:intel": "quasar build --mode electron --mac --x64",
+        "build:arm": "quasar build --mode electron --mac --arm64"
     },
     "devDependencies": {
         "@babel/eslint-parser": "^7.25.1",

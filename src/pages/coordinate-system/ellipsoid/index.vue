@@ -2,10 +2,8 @@
 import VLayout from "components/VLayout.vue";
 
 async function open() {
-    await window.ipcRenderer.select("source");
-    window.ipcRenderer.selectOver(async (_, response) => {
-        console.log(response);
-    });
+    const res = await window.Renderer.select("source");
+    console.log(res);
 }
 </script>
 
@@ -13,8 +11,8 @@ async function open() {
     <VLayout>
         <template #body>
             <q-btn @click="open" class="text-accent bg-primary" no-caps flat
-                >open</q-btn
-            >
+                >open
+            </q-btn>
         </template>
     </VLayout>
 </template>

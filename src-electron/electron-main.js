@@ -34,9 +34,6 @@ function createWindow() {
             ),
         },
     });
-
-    app.commandLine.appendSwitch("lang", "zh-CN");
-
     /**
      *
      * @description 设置菜单
@@ -54,7 +51,7 @@ function createWindow() {
 
     /**
      *
-     * @description 去啊u就那句注册快捷键
+     * @description 全局注册快捷键
      *
      */
     globalShortcut.register("CommandOrControl+I", () => {
@@ -97,6 +94,8 @@ function createWindow() {
     });
 }
 
+app.commandLine.appendSwitch("lang", "zh-CN");
+
 app.whenReady().then(createWindow);
 
 app.on("will-quit", () => {
@@ -121,13 +120,18 @@ app.on("activate", () => {
  *
  */
 
-ipcMain.on("select", async (event, args = {}) => {
-    const response = await dialog.showOpenDialog({
-        properties: ["openDirectory"],
+// ipcMain.removeAllListeners("select");
+ipcMain.handle("select", async (event, args = {}) => {
+    return await dialog.showOpenDialog({
+        // properties: ["openDirectory"],
+        properties: ["openFile"],
         modal: true,
         parent: mainWindow,
+        filters: [
+            { name: "All Files", extensions: ["*"] },
+            // 或者指定文件类型，例如：
+            // { name: 'Images', extensions: ['jpg', 'png', 'gif'] },
+            // { name: 'Documents', extensions: ['doc', 'docx', 'pdf'] }
+        ],
     });
-    if (response) {
-        event.reply("selectOver", { args, response });
-    }
 });
