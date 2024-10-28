@@ -1,6 +1,5 @@
 import { createPinia } from "pinia";
 import { store } from "quasar/wrappers";
-import storage from "pinia-plugin-persistedstate";
 /*
  * If not building with SSR mode, you can
  * directly export the Store instantiation;
@@ -11,5 +10,5 @@ import storage from "pinia-plugin-persistedstate";
  */
 
 export default store((/* { ssrContext } */) => {
-    return createPinia().use(storage);
+    return createPinia();
 });

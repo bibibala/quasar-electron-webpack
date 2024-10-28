@@ -1,21 +1,21 @@
 {
     "name": "adjustment",
     "version": "0.0.1",
-    "description": "testpc版本",
-    "productName": "test",
+    "description": "测量员平差pc版本",
+    "productName": "测量员平差",
     "author": {
         "email": "support@bingce.com",
-        "name": "1140918095@qq.com"
+        "name": "Copyright © 2024 Zhengzhou bingce Technology Co., Ltd."
     },
     "private": true,
     "scripts": {
         "lint": "eslint --ext .js,.vue ./",
         "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
         "dev": "quasar dev --mode electron",
-        "build:winx64": "quasar build --mode electron --win --x64",
-        "build:winia32": "quasar build --mode electron --win --ia32",
-        "build:intel": "quasar build --mode electron --mac --x64",
-        "build:arm": "quasar build --mode electron --mac --arm64"
+        "build:winx64": "quasar build --mode electron --target win --arch x64",
+        "build:winia32": "quasar build --mode electron --target win --arch ia32",
+        "build:intel": "quasar build --mode electron --target mac --arch x64",
+        "build:arm": "quasar build --mode electron --target mac --arch arm64"
     },
     "devDependencies": {
         "@babel/eslint-parser": "^7.25.1",
@@ -33,7 +33,6 @@
         "eslint-webpack-plugin": "^3.2.0",
         "node-loader": "^2.0.0",
         "pinia": "^2.2.2",
-        "pinia-plugin-persistedstate": "^4.0.2",
         "prettier": "^2.8.8",
         "quasar": "^2.17.1",
         "terser-webpack-plugin": "^5.3.10",
