@@ -21,7 +21,7 @@ function createWindow() {
         height: 850,
         autoHideMenuBar: true,
         useContentSize: true,
-        title: "测量员平差",
+        title: "test",
         webPreferences: {
             sandbox: false,
             nodeIntegration: false,
@@ -42,7 +42,7 @@ function createWindow() {
 
     const template = [
         {
-            label: "测量员平差",
+            label: "test",
             submenu: [{ role: "quit" }],
         },
     ];

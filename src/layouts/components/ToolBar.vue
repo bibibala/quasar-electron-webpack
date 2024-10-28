@@ -2,7 +2,7 @@
     <q-toolbar style="height: 60px" class="full-width">
         <div class="box">
             <img src="~src/assets/logo.png" style="height: 43px" />
-            <div class="text">测量员平差</div>
+            <div class="text">test</div>
         </div>
         <q-space></q-space>
         <q-avatar size="md" class="q-mr-xs">
