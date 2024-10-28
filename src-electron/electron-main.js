@@ -9,9 +9,10 @@ import {
     dialog,
 } from "electron";
 
+const packageJson = require("../package.json");
+
 // needed in case process is undefined under Linux
 const platform = process.platform || os.platform();
-
 let mainWindow;
 
 function createWindow() {
@@ -21,7 +22,7 @@ function createWindow() {
         height: 850,
         autoHideMenuBar: true,
         useContentSize: true,
-        title: "test",
+        title: packageJson.productName,
         webPreferences: {
             sandbox: false,
             nodeIntegration: false,
@@ -39,11 +40,64 @@ function createWindow() {
      * @description 设置菜单
      *
      */
-
     const template = [
         {
-            label: "test",
-            submenu: [{ role: "quit" }],
+            label: "Application",
+            submenu: [
+                {
+                    label: "About Application",
+                    click: () => {
+                        dialog.showMessageBox({
+                            type: "info",
+                            icon: path.join(__dirname, "icons/icon.png"),
+                            title: packageJson.productName,
+                            message: `Version: ${packageJson.version}`,
+                            detail: packageJson.author.name,
+                            buttons: ["OK"],
+                        });
+                    },
+                },
+                { type: "separator" },
+                {
+                    label: "Quit",
+                    accelerator: "Command+Q",
+                    click: () => {
+                        app.quit();
+                    },
+                },
+            ],
+        },
+        {
+            label: "Edit",
+            submenu: [
+                {
+                    label: "Undo",
+                    accelerator: "CmdOrCtrl+Z",
+                    selector: "undo:",
+                },
+                {
+                    label: "Redo",
+                    accelerator: "Shift+CmdOrCtrl+Z",
+                    selector: "redo:",
+                },
+                { type: "separator" },
+                { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
+                {
+                    label: "Copy",
+                    accelerator: "CmdOrCtrl+C",
+                    selector: "copy:",
+                },
+                {
+                    label: "Paste",
+                    accelerator: "CmdOrCtrl+V",
+                    selector: "paste:",
+                },
+                {
+                    label: "Select All",
+                    accelerator: "CmdOrCtrl+A",
+                    selector: "selectAll:",
+                },
+            ],
         },
     ];
     const menu = Menu.buildFromTemplate(template);
@@ -56,25 +110,6 @@ function createWindow() {
      */
     globalShortcut.register("CommandOrControl+I", () => {
         mainWindow.webContents.openDevTools();
-    });
-
-    /**
-     *
-     * @description 设置常用快捷键
-     */
-    mainWindow.webContents.on("before-input-event", (event, input) => {
-        if (input.type === "keyDown" && input.key === "c" && input.meta) {
-            mainWindow.webContents.copy();
-            event.preventDefault();
-        }
-        if (input.type === "keyDown" && input.key === "v" && input.meta) {
-            mainWindow.webContents.paste();
-            event.preventDefault();
-        }
-        if (input.type === "keyDown" && input.key === "x" && input.meta) {
-            mainWindow.webContents.cut();
-            event.preventDefault();
-        }
     });
 
     mainWindow.loadURL(process.env.APP_URL);

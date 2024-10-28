@@ -7,7 +7,7 @@
 
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js
-
+const packageJson = require("./package.json");
 const ESLintPlugin = require("eslint-webpack-plugin");
 const { configure } = require("quasar/wrappers");
 const TerserPlugin = require("terser-webpack-plugin");
@@ -15,7 +15,7 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = configure((ctx) => {
     return {
-        boot: ["axios", "permission"],
+        boot: ["axios"],
         css: ["app.scss"],
         extras: ["mdi-v7"],
         build: {
@@ -94,14 +94,13 @@ module.exports = configure((ctx) => {
         electron: {
             bundler: "builder",
             builder: {
-                appId: "",
+                appId: "com.bingce.adjustment",
                 $schema:
                     "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
                 asar: true,
-                productName: "test",
+                productName: packageJson.productName,
                 afterPack: "afterPack.js",
-                copyright:
-                    "1140918095@qq.com",
+                copyright: packageJson.author.name,
                 // 解压文件
                 asarUnpack: [
                     "resources/dll/*.dll",
@@ -134,8 +133,8 @@ module.exports = configure((ctx) => {
                 mac: {
                     target: "dmg",
                     extendInfo: {
-                        CFBundleName: "test",
-                        CFBundleDisplayName: "test",
+                        CFBundleName: packageJson.productName,
+                        CFBundleDisplayName: packageJson.productName,
                     },
                     icon: "src-electron/icons/icon.icns",
                     artifactName:
@@ -169,7 +168,7 @@ module.exports = configure((ctx) => {
                 nsis: {
                     oneClick: false,
                     perMachine: false,
-                    shortcutName: "test",
+                    shortcutName: packageJson.productName,
                     allowToChangeInstallationDirectory: true,
                     deleteAppDataOnUninstall: true,
                 },
