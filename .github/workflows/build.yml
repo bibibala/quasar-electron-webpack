@@ -9,6 +9,9 @@ on:
 jobs:
     build:
         runs-on: macos-latest
+        env:
+            PNPM_HOME: /Users/runner/.local/share/pnpm
+            NPM_CONFIG_REGISTRY: https://registry.npmjs.org/
 
         steps:
             - name: Checkout repository
@@ -40,22 +43,35 @@ jobs:
 
             - name: Install dependencies
               run: |
-                  pnpm install
-                  pnpm add -g @quasar/cli
-                  pnpm add -g electron-packager
-                  pnpm add -g electron-builder
+                  pnpm install --no-frozen-lockfile
 
             - name: Build Windows x64
-              run: pnpm run build:winx64
+              env:
+                  QUASAR_NO_FREEZE_LOCKFILE: true
+              run: |
+                  export PATH="$PNPM_HOME:$PATH"
+                  pnpm run build:winx64
 
             - name: Build Windows ia32
-              run: pnpm run build:winia32
+              env:
+                  QUASAR_NO_FREEZE_LOCKFILE: true
+              run: |
+                  export PATH="$PNPM_HOME:$PATH"
+                  pnpm run build:winia32
 
             - name: Build Mac Intel
-              run: pnpm run build:intel
+              env:
+                  QUASAR_NO_FREEZE_LOCKFILE: true
+              run: |
+                  export PATH="$PNPM_HOME:$PATH"
+                  pnpm run build:intel
 
             - name: Build Mac ARM
-              run: pnpm run build:arm
+              env:
+                  QUASAR_NO_FREEZE_LOCKFILE: true
+              run: |
+                  export PATH="$PNPM_HOME:$PATH"
+                  pnpm run build:arm
 
             - name: Upload Windows x64 Artifacts
               uses: actions/upload-artifact@v3
