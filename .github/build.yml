@@ -1,0 +1,105 @@
+name: Build Application
+
+on:
+    push:
+        branches: [ main, master ]
+    pull_request:
+        branches: [ main, master ]
+
+jobs:
+    build:
+        runs-on: macos-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '18'
+
+            - name: Install pnpm
+              uses: pnpm/action-setup@v2
+              with:
+                  version: latest
+                  run_install: false
+
+            - name: Get pnpm store directory
+              shell: bash
+              run: |
+                  echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_ENV
+
+            - name: Setup pnpm cache
+              uses: actions/cache@v3
+              with:
+                  path: ${{ env.STORE_PATH }}
+                  key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+                  restore-keys: |
+                      ${{ runner.os }}-pnpm-store-
+
+            - name: Check package manager and install dependencies
+              run: |
+                  if [ -f "package.json" ]; then
+                    echo "Using npm"
+                    npm install
+                  else
+                    echo "Using pnpm"
+                    pnpm install
+                  fi
+
+            - name: Build Windows x64
+              run: |
+                  if [ -f "package.json" ]; then
+                    npm run build:winx64
+                  else
+                    pnpm run build:winx64
+                  fi
+
+            - name: Build Windows ia32
+              run: |
+                  if [ -f "package.json" ]; then
+                    npm run build:winia32
+                  else
+                    pnpm run build:winia32
+                  fi
+
+            - name: Build Mac Intel
+              run: |
+                  if [ -f "package.json" ]; then
+                    npm run build:intel
+                  else
+                    pnpm run build:intel
+                  fi
+
+            - name: Build Mac ARM
+              run: |
+                  if [ -f "package.json" ]; then
+                    npm run build:arm
+                  else
+                    pnpm run build:arm
+                  fi
+
+            - name: Upload Windows x64 Artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                  name: windows-x64
+                  path: dist/electron/Packaged/*.exe
+
+            - name: Upload Windows ia32 Artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                  name: windows-ia32
+                  path: dist/electron/Packaged/*.exe
+
+            - name: Upload Mac Intel Artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                  name: mac-intel
+                  path: dist/electron/Packaged/*.dmg
+
+            - name: Upload Mac ARM Artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                  name: mac-arm
+                  path: dist/electron/Packaged/*.dmg
