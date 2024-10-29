@@ -17,89 +17,54 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@v4
               with:
-                  node-version: '18'
+                  node-version: '20'
+                  registry-url: 'https://registry.npmjs.org'
 
-            - name: Install pnpm
-              uses: pnpm/action-setup@v2
-              with:
-                  version: latest
-                  run_install: false
-
-            - name: Get pnpm store directory
-              shell: bash
-              run: |
-                  echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_ENV
-
-            - name: Setup pnpm cache
+            - name: Setup npm cache
               uses: actions/cache@v3
               with:
-                  path: ${{ env.STORE_PATH }}
-                  key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+                  path: ~/.npm
+                  key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
                   restore-keys: |
-                      ${{ runner.os }}-pnpm-store-
+                      ${{ runner.os }}-node-
 
-            - name: Check package manager and install dependencies
+            - name: Install dependencies
               run: |
-                  if [ -f "package.json" ]; then
-                    echo "Using npm"
-                    npm install
-                  else
-                    echo "Using pnpm"
-                    pnpm install
-                  fi
+                  rm -f .npmrc || true
+                  npm install --no-package-lock
 
             - name: Build Windows x64
-              run: |
-                  if [ -f "package.json" ]; then
-                    npm run build:winx64
-                  else
-                    pnpm run build:winx64
-                  fi
+              run: npm run build:winx64
 
             - name: Build Windows ia32
-              run: |
-                  if [ -f "package.json" ]; then
-                    npm run build:winia32
-                  else
-                    pnpm run build:winia32
-                  fi
+              run: npm run build:winia32
 
             - name: Build Mac Intel
-              run: |
-                  if [ -f "package.json" ]; then
-                    npm run build:intel
-                  else
-                    pnpm run build:intel
-                  fi
+              run: npm run build:intel
 
             - name: Build Mac ARM
-              run: |
-                  if [ -f "package.json" ]; then
-                    npm run build:arm
-                  else
-                    pnpm run build:arm
-                  fi
+              run: npm run build:arm
 
             - name: Upload Windows x64 Artifacts
               uses: actions/upload-artifact@v3
               with:
                   name: windows-x64
-                  path: dist/electron/Packaged/*.exe
+                  path: release/Packaged/*.exe
 
             - name: Upload Windows ia32 Artifacts
               uses: actions/upload-artifact@v3
               with:
                   name: windows-ia32
-                  path: dist/electron/Packaged/*.exe
+                  path: release/Packaged/*.exe
 
             - name: Upload Mac Intel Artifacts
               uses: actions/upload-artifact@v3
               with:
                   name: mac-intel
-                  path: dist/electron/Packaged/*.dmg
+                  path: release/Packaged/*.dmg
 
             - name: Upload Mac ARM Artifacts
               uses: actions/upload-artifact@v3
               with:
                   name: mac-arm
-                  path: dist/electron/Packaged/*.dmg
+                  path: release/Packaged/*.dmg
