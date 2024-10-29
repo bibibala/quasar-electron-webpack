@@ -18,32 +18,44 @@ jobs:
               uses: actions/setup-node@v4
               with:
                   node-version: '20'
-                  registry-url: 'https://registry.npmjs.org'
 
-            - name: Setup npm cache
+            - name: Install pnpm
+              uses: pnpm/action-setup@v2
+              with:
+                  version: latest
+                  run_install: false
+
+            - name: Get pnpm store directory
+              shell: bash
+              run: |
+                  echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_ENV
+
+            - name: Setup pnpm cache
               uses: actions/cache@v3
               with:
-                  path: ~/.npm
-                  key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+                  path: ${{ env.STORE_PATH }}
+                  key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
                   restore-keys: |
-                      ${{ runner.os }}-node-
+                      ${{ runner.os }}-pnpm-store-
 
             - name: Install dependencies
               run: |
-                  rm -f .npmrc || true
-                  npm install --no-package-lock
+                  pnpm install
+                  pnpm add -g @quasar/cli
+                  pnpm add -g electron-packager
+                  pnpm add -g electron-builder
 
             - name: Build Windows x64
-              run: npm run build:winx64
+              run: pnpm run build:winx64
 
             - name: Build Windows ia32
-              run: npm run build:winia32
+              run: pnpm run build:winia32
 
             - name: Build Mac Intel
-              run: npm run build:intel
+              run: pnpm run build:intel
 
             - name: Build Mac ARM
-              run: npm run build:arm
+              run: pnpm run build:arm
 
             - name: Upload Windows x64 Artifacts
               uses: actions/upload-artifact@v3
