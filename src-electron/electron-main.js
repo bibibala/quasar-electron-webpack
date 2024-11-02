@@ -1,20 +1,19 @@
 import path from "path";
 import os from "os";
-import {
-    app,
-    BrowserWindow,
-    Menu,
-    globalShortcut,
-    ipcMain,
-    dialog,
-} from "electron";
+import { setAppTopBar } from "./utils/TopBar";
 
 const packageJson = require("../package.json");
+import { app, BrowserWindow, globalShortcut, ipcMain, dialog } from "electron";
 
+/**
+ *
+ *@description main process
+ *
+ */
 // needed in case process is undefined under Linux
 const platform = process.platform || os.platform();
 
-const isDev = process.env.NODE_ENV === 'development'
+const isDev = process.env.NODE_ENV === "development";
 
 let mainWindow;
 
@@ -24,87 +23,19 @@ function createWindow() {
         width: 1350,
         height: 850,
         autoHideMenuBar: true,
-        useContentSize: true,
         title: packageJson.productName,
         webPreferences: {
             sandbox: false,
             nodeIntegration: false,
             contextIsolation: true,
             enableRemoteModule: false,
-            // More info: https://v2.quasar.dev/quasar-cli-webpack/developing-electron-apps/electron-preload-script
             preload: path.resolve(
                 __dirname,
                 process.env.QUASAR_ELECTRON_PRELOAD
             ),
         },
     });
-    /**
-     *
-     * @description 设置菜单
-     *
-     */
-    const template = [
-        {
-            label: "Application",
-            submenu: [
-                {
-                    label: `关于${packageJson.productName}`,
-                    click: () => {
-                        dialog.showMessageBox({
-                            type: "info",
-                            icon: path.join(__dirname, "icons/icon.png"),
-                            title: packageJson.productName,
-                            message: `Version: ${packageJson.version}`,
-                            detail: packageJson.author.name,
-                            buttons: ["OK"],
-                        });
-                    },
-                },
-                {type: "separator"},
-                {
-                    label: "退出",
-                    accelerator: "Command+Q",
-                    click: () => {
-                        app.quit();
-                    },
-                },
-            ],
-        },
-        {
-            label: "快捷方式",
-            submenu: [
-                {
-                    label: "撤销",
-                    accelerator: "CmdOrCtrl+Z",
-                    selector: "undo:",
-                },
-                {
-                    label: "重做",
-                    accelerator: "Shift+CmdOrCtrl+Z",
-                    selector: "redo:",
-                },
-                {type: "separator"},
-                {label: "剪切", accelerator: "CmdOrCtrl+X", selector: "cut:"},
-                {
-                    label: "复制",
-                    accelerator: "CmdOrCtrl+C",
-                    selector: "copy:",
-                },
-                {
-                    label: "粘贴",
-                    accelerator: "CmdOrCtrl+V",
-                    selector: "paste:",
-                },
-                {
-                    label: "全选",
-                    accelerator: "CmdOrCtrl+A",
-                    selector: "selectAll:",
-                },
-            ],
-        },
-    ];
-    const menu = Menu.buildFromTemplate(template);
-    Menu.setApplicationMenu(menu);
+    setAppTopBar();
     /**
      *
      * @description 全局注册快捷键
@@ -154,25 +85,26 @@ app.on("activate", () => {
         createWindow();
     }
 });
-
 /**
  *
  * @description ipcMain
  *
  */
-
-// ipcMain.removeAllListeners("select");
 ipcMain.handle("select", async (event, args = {}) => {
-    return await dialog.showOpenDialog({
+    const { filePaths } = await dialog.showOpenDialog({
+        // properties?: Array<'openFile' | 'openDirectory' | 'multiSelections' | 'showHiddenFiles' | 'createDirectory' | 'promptToCreate' | 'noResolveAliases' | 'treatPackageAsDirectory' | 'dontAddToRecent'>;
         // properties: ["openDirectory"],
         properties: ["openFile"],
         modal: true,
         parent: mainWindow,
         filters: [
-            {name: "All Files", extensions: ["*"]},
+            { name: "All Files", extensions: ["*"] },
             // 或者指定文件类型，例如：
             // { name: 'Images', extensions: ['jpg', 'png', 'gif'] },
             // { name: 'Documents', extensions: ['doc', 'docx', 'pdf'] }
         ],
     });
+    if (Array.isArray(filePaths) && filePaths.length) {
+        console.log(filePaths);
+    }
 });

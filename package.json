@@ -1,6 +1,6 @@
 {
     "name": "adjustment",
-    "version": "0.1.0",
+    "version": "0.0.1",
     "description": "测量员平差pc版本",
     "productName": "测量员平差",
     "author": {
@@ -17,6 +17,9 @@
         "build:intel": "quasar build --mode electron --target mac --arch x64",
         "build:arm": "quasar build --mode electron --target mac --arch arm64"
     },
+    "dependencies": {
+        "koffi": "^2.9.1"
+    },
     "devDependencies": {
         "@babel/eslint-parser": "^7.25.1",
         "@quasar/app-webpack": "^3.14.2",
@@ -25,6 +28,7 @@
         "axios": "^1.7.7",
         "core-js": "^3.38.1",
         "css-minimizer-webpack-plugin": "^7.0.0",
+        "dexie": "^4.0.9",
         "electron": "33.0.1",
         "electron-builder": "^25.1.8",
         "eslint": "^8.57.1",

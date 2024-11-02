@@ -1,9 +1,10 @@
 <script setup>
 import VLayout from "components/VLayout.vue";
+import { addProject } from "src/plugins/dexie/project";
 
 async function open() {
-    const res = await window.Renderer.select("source");
-    console.log(res);
+    window.Renderer.select("source");
+    console.log(await addProject({ name: "233", age: "22", sex: "nan" }));
 }
 </script>
 

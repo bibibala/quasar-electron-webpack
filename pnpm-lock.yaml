@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      koffi:
+        specifier: ^2.9.1
+        version: 2.9.1
     devDependencies:
       '@babel/eslint-parser':
         specifier: ^7.25.1
@@ -29,6 +33,9 @@ importers:
       css-minimizer-webpack-plugin:
         specifier: ^7.0.0
         version: 7.0.0(webpack@5.94.0)
+      dexie:
+        specifier: ^4.0.9
+        version: 4.0.9
       electron:
         specifier: 33.0.1
         version: 33.0.1
@@ -1886,6 +1893,9 @@ packages:
   detect-node@2.1.0:
     resolution: {integrity: sha512-T0NIuQpnTvFDATNuHN5roPwSBG83rFsuO+MXXH9/3N1eFbn4wcPjttvjMLEPWJ0RGUYgQE7cGgS3tNxbqCGM7g==}
 
+  dexie@4.0.9:
+    resolution: {integrity: sha512-VQG1huEVSAdDZssb9Bb9mFy+d3jAE0PT4d1nIRYlT46ip1fzbs1tXi0SlUayRDgV3tTbJG8ZRqAo2um49gtynA==}
+
   dir-compare@4.2.0:
     resolution: {integrity: sha512-2xMCmOoMrdQIPHdsTawECdNPwlVFB9zGcz3kuhmBO6U3oU+UQjsue0i8ayLKpgBcm+hcXPMVSGUN9d+pvJ6+VQ==}
 
@@ -2803,6 +2813,9 @@ packages:
   klona@2.0.6:
     resolution: {integrity: sha512-dhG34DXATL5hSxJbIexCft8FChFXtmskoZYnoPWjXQuebWYCNkVeV3KkGegCK9CP1oswI/vQibS2GY7Em/sJJA==}
     engines: {node: '>= 8'}
+
+  koffi@2.9.1:
+    resolution: {integrity: sha512-LXYOzaiUB8XK7EwbG0tgzhajEr3FLS2RB9oHYbTOiWRQQO+Rgft3xSvd5TFlM3wQ6DMMQG41lvUR5gLgdyWIsA==}
 
   launch-editor-middleware@2.6.1:
     resolution: {integrity: sha512-Fg/xYhf7ARmRp40n18wIfJyuAMEjXo67Yull7uF7d0OJ3qA4EYJISt1XfPPn69IIJ5jKgQwzcg6DqHYo95LL/g==}
@@ -7124,6 +7137,8 @@ snapshots:
 
   detect-node@2.1.0: {}
 
+  dexie@4.0.9: {}
+
   dir-compare@4.2.0:
     dependencies:
       minimatch: 3.1.2
@@ -8209,6 +8224,8 @@ snapshots:
 
   klona@2.0.6: {}
 
+  koffi@2.9.1: {}
+
   launch-editor-middleware@2.6.1:
     dependencies:
       launch-editor: 2.9.1
@@ -8686,7 +8703,7 @@ snapshots:
   path-scurry@1.11.1:
     dependencies:
       lru-cache: 10.4.3
-      minipass: 5.0.0
+      minipass: 7.1.2
 
   path-to-regexp@0.1.10: {}
 

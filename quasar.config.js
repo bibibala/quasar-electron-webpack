@@ -7,9 +7,9 @@
 
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js
-const electronConfig = require("./electron.config");
+const buildConfig = require("./build.config");
 const ESLintPlugin = require("eslint-webpack-plugin");
-const {configure} = require("quasar/wrappers");
+const { configure } = require("quasar/wrappers");
 const TerserPlugin = require("terser-webpack-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
@@ -37,7 +37,7 @@ module.exports = configure((ctx) => {
             chainWebpack(chain) {
                 chain
                     .plugin("eslint-webpack-plugin")
-                    .use(ESLintPlugin, [{extensions: ["js", "vue"]}]);
+                    .use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
             },
             extendWebpack(
                 cfg,
@@ -62,15 +62,10 @@ module.exports = configure((ctx) => {
         framework: {
             lang: "zh-CN",
             iconSet: "mdi-v7",
-            plugins: ["Loading", "Notify", "LoadingBar"],
+            plugins: ["Loading", "Notify", "LocalStorage"],
             config: {
                 screen: {
                     bodyClasses: true,
-                },
-                loadingBar: {
-                    color: "primary",
-                    size: "3px",
-                    position: "top",
                 },
                 loading: {
                     // QSpinnerGears
@@ -91,6 +86,6 @@ module.exports = configure((ctx) => {
                 },
             },
         },
-        electron: electronConfig
+        electron: buildConfig,
     };
 });
