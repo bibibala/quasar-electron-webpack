@@ -38,6 +38,13 @@ module.exports = {
             "!**/{appveyor.yml,.travis.yml,circle.yml}",
             "!**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}",
             "!**/node_modules/*/{.git,.npm,.DS_Store,LICENSE,license,License}",
+            "!node_modules/koffi/doc${/*}",
+            "!node_modules/koffi/vendor${/*}",
+            "!node_modules/koffi/src${/*}",
+            "!node_modules/koffi/test${/*}",
+            "!node_modules/koffi/examples${/*}",
+            "!node_modules/koffi/**/*.{md,txt,ts,map}",
+            "!node_modules/koffi/test${/*}",
         ],
         mac: {
             target: "dmg",

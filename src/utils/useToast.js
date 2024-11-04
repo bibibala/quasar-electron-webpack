@@ -29,7 +29,7 @@ function showSuccess(content) {
         icon: "mdi-check-circle-outline",
         progress: true,
         type: "positive",
-        position: "top-right",
+        position: "top-center",
         timeout: 600,
     });
 }
@@ -40,7 +40,7 @@ function showWarn(content) {
         icon: "mdi-alert-outline",
         progress: true,
         type: "warning",
-        position: "top-right",
+        position: "top-center",
         timeout: 3000,
     });
 }
@@ -51,7 +51,7 @@ function showInfo(content) {
         icon: "mdi-information-outline",
         progress: true,
         type: "info",
-        position: "top-right",
+        position: "top-center",
         timeout: 2000,
     });
 }
@@ -62,7 +62,7 @@ function showError(content) {
         icon: "mdi-close-circle-outline",
         progress: true,
         type: "negative",
-        position: "top-right",
+        position: "top-center",
         timeout: 3000,
     });
 }

@@ -1,5 +1,5 @@
-import {liveQuery} from "dexie";
-import {DB} from "src/plugins/dexie/index";
+import { liveQuery } from "dexie";
+import { DB } from "src/plugins/dexie/index";
 
 const PROJECTS = DB.projects;
 
@@ -13,6 +13,19 @@ export async function addProject(data) {
         return await PROJECTS.add(data);
     } catch (error) {
         console.error("添加项目失败:", error);
+    }
+}
+
+/**
+ *
+ * @param data {Array}
+ * @return {Promise<any>}
+ */
+export async function addProjectBulk(data) {
+    try {
+        return await PROJECTS.bulkAdd(data);
+    } catch (error) {
+        console.error("批量添加项目失败:", error);
     }
 }
 
@@ -49,7 +62,7 @@ export async function getProjectListLength() {
  * @param {object} criteria - 查找条件对象，例如 {age: {min: 18, max: 65}}
  */
 export function findProject(criteria) {
-    const {field, min, max} = criteria;
+    const { field, min, max } = criteria;
 
     return liveQuery(async () => {
         try {
@@ -75,13 +88,26 @@ export async function removeProject(id) {
 }
 
 /**
+ *
+ * @param data {Array}
+ * @return {Promise<void>}
+ *
+ */
+export async function removeProjectBulk(data) {
+    try {
+        await PROJECTS.bulkDelete(data);
+    } catch (error) {
+        console.error("批量删除项目失败:", error);
+    }
+}
+
+/**
  * 清空所有项目
  * @return {Promise<void>}
  */
 export async function clearProject() {
     try {
         await PROJECTS.clear();
-        console.log("所有项目已清空");
     } catch (error) {
         console.error("清空项目失败:", error);
     }

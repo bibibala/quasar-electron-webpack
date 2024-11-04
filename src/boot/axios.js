@@ -13,7 +13,7 @@ const http = axios.create({
 });
 let cancelTokenSource = axios.CancelToken.source();
 // app ,router
-export default boot(({ router }) => {
+export default boot(() => {
     http.interceptors.request.use(
         (request) => {
             request.cancelToken = cancelTokenSource.token;
@@ -33,20 +33,12 @@ export default boot(({ router }) => {
                 cancelTokenSource.cancel(
                     "您的登录已过期,请点击按钮返回首页重新登录,401"
                 );
-                router.push({
-                    path: "/error",
-                    query: {
-                        err: "您的登录已过期,请点击按钮返回首页重新登录,401",
-                    },
-                });
-                cancelTokenSource = axios.CancelToken.source();
             }
             LoadingBar.stop();
             return data;
         },
         (error) => {
             LoadingBar.stop();
-            router.push({ path: "/error", query: { err: error } });
             return Promise.reject(error);
         }
     );

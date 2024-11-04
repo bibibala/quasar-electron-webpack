@@ -90,7 +90,7 @@ app.on("activate", () => {
  * @description ipcMain
  *
  */
-ipcMain.handle("select", async (event, args = {}) => {
+ipcMain.handle("select", async () => {
     const { filePaths } = await dialog.showOpenDialog({
         // properties?: Array<'openFile' | 'openDirectory' | 'multiSelections' | 'showHiddenFiles' | 'createDirectory' | 'promptToCreate' | 'noResolveAliases' | 'treatPackageAsDirectory' | 'dontAddToRecent'>;
         // properties: ["openDirectory"],

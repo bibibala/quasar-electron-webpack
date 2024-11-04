@@ -1,6 +1,6 @@
 const koffi = require("koffi");
 
-// ../../resources/dll/test.dylib
+// ../../resources/dll/test-arm.dylib
 
 // 加载系统动态库
 const libSystem = koffi.load("libSystem.dylib");
