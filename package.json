@@ -1,11 +1,11 @@
 {
-    "name": "adjustment",
+    "name": "demo",
     "version": "0.0.1",
-    "description": "测量员平差pc版本",
-    "productName": "测量员平差",
+    "description": "a demo app",
+    "productName": "demo",
     "author": {
-        "email": "support@bingce.com",
-        "name": "Copyright © 2024 Zhengzhou bingce Technology Co., Ltd."
+        "email": "1140918095@qq.com",
+        "name": "https://github.com/bibibala"
     },
     "private": true,
     "scripts": {

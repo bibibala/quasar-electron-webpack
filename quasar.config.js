@@ -31,7 +31,7 @@ module.exports = configure((ctx) => {
             env: {
                 WEB_APP_URL: ctx.dev
                     ? "http://192.168.3.100:40084"
-                    : "https://test.bingce.com",
+                    : "http://192.168.3.100:40084",
             },
             // c isClient: true, isServer: false
             chainWebpack(chain) {
